@@ -51,7 +51,17 @@ namespace Sitecore.Support.Cintel.Reporting.Services
                     LatestVisitCountryDisplayName = ipInfo?.Country,
                     LatestVisitBusinessName = ipInfo?.BusinessName,
                     LatestVisitCityDisplayName = ipInfo?.City
-                };                
+                };
+
+                if (string.IsNullOrEmpty((eventDto.SiteName)))
+                {
+                    eventDto.SiteName = Sitecore.Configuration.Settings.GetSetting("PathAnalyzer.Events.NoSite", "No site info");
+                }
+
+                if (string.IsNullOrEmpty((eventDto.Url)))
+                {
+                    eventDto.Url = Sitecore.Configuration.Settings.GetSetting("PathAnalyzer.Events.NoUrl", "no url");
+                }
 
                 ResolveDataForEvent(eventDto);
                 result.Add(eventDto);
